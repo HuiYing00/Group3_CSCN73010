@@ -9,20 +9,24 @@ app = Flask(__name__)
 # Home route
 @app.route("/")
 def main():
+    """Render the main page with image upload form."""
     return render_template("index.html")
 
 
 # Prediction route
 @app.route('/prediction', methods=['POST'])
 def predict_image_file():
+    """
+    Process uploaded image and return prediction result.
+    """
     try:
         if request.method == 'POST':
             img = preprocess_img(request.files['file'].stream)
             pred = predict_result(img)
             return render_template("result.html", predictions=str(pred))
-
-    except:
-        error = "File cannot be processed."
+        return render_template("result.html", err="Invalid request method.")
+    except Exception as e:
+        error = f"File cannot be processed: {str(e)}"
         return render_template("result.html", err=error)
 
 
