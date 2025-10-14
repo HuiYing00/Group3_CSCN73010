@@ -1,8 +1,14 @@
+"""
+Model module for digit recognition.
+Handles image preprocessing and prediction using a pre-trained Keras model.
+"""
+
 # Importing required libs
 import numpy as np
 from keras.models import load_model
 from keras.utils import img_to_array
 from PIL import Image
+
 
 # Loading model
 model = load_model("digit_model.h5")

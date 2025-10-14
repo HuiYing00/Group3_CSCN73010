@@ -1,10 +1,14 @@
+"""
+Flask web application for hand digit image recognition.
+This module provides routes for uploading and predicting hand digit images.
+"""
+
 # Importing required libs
 from flask import Flask, render_template, request
 from model import preprocess_img, predict_result
 
 # Instantiating flask app
 app = Flask(__name__)
-
 
 # Home route
 @app.route("/")
