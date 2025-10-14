@@ -1,9 +1,7 @@
 name: CI
 
 on:
-  push:
-    branches:
-      - main  # Run on pushes made into the main branch
+  push:  # Trigger on every push to any branch
   pull_request:
     branches:
       - main  # Run on pull requests targeting the main branch
@@ -28,4 +26,8 @@ jobs:
 
       - name: Run tests
         run: |
-          pytest test_model.py  # Run your tests
+          pytest test_model.py test_app_routes.py test_model_unit.py  # Run your tests
+
+      - name: Run pylint
+        run: |
+          pylint app.py model.py  # Run pylint on source files
