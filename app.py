@@ -5,6 +5,7 @@ This module provides routes for uploading and predicting hand digit images.
 
 # Importing required libs
 from flask import Flask, render_template, request
+from PIL import UnidentifiedImageError
 from model import preprocess_img, predict_result
 
 # Instantiating flask app
@@ -29,8 +30,17 @@ def predict_image_file():
             pred = predict_result(img)
             return render_template("result.html", predictions=str(pred))
         return render_template("result.html", err="Invalid request method.")
-    except Exception as e:
-        error = f"File cannot be processed: {str(e)}"
+    except KeyError:
+        error = "No file uploaded. Please select an image file."
+        return render_template("result.html", err=error)
+    except UnidentifiedImageError:
+        error = "Invalid image file. Please upload a valid image."
+        return render_template("result.html", err=error)
+    except (OSError, IOError) as e:
+        error = f"Error reading file: {str(e)}"
+        return render_template("result.html", err=error)
+    except (ValueError, RuntimeError) as e:
+        error = f"Error processing image: {str(e)}"
         return render_template("result.html", err=error)
 
 
