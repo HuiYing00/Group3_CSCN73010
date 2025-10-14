@@ -34,7 +34,7 @@ def predict_image_file():
         error = "No file uploaded. Please select an image file."
         return render_template("result.html", err=error)
     except UnidentifiedImageError:
-        error = "Invalid image file. Please upload a valid image."
+        error = "Invalid image file cannot be processed. Please upload a valid image."
         return render_template("result.html", err=error)
     except (OSError, IOError) as e:
         error = f"Error reading file: {str(e)}"
